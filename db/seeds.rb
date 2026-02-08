@@ -2,7 +2,7 @@ admin = User.find_or_create_by!(email: "admin@forum.local") do |u|
   u.username = "admin"
   u.password = "password"
   u.password_confirmation = "password"
-  u.admin = true
+  u.role = "administrator"
 end
 
 puts "Admin user: #{admin.email} / password"

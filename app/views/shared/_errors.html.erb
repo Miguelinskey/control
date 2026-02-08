@@ -1,5 +1,5 @@
 <% if object&.errors&.any? %>
-  <div style="color: red;">
+  <div class="form-errors">
     <h3><%= pluralize(object.errors.count, "error") %> prevented saving:</h3>
     <ul>
       <% object.errors.full_messages.each do |msg| %>

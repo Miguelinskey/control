@@ -35,4 +35,11 @@ module Authentication
       redirect_to root_path
     end
   end
+
+  def require_staff
+    unless logged_in? && current_user.staff?
+      flash[:alert] = "Not authorized."
+      redirect_to root_path
+    end
+  end
 end

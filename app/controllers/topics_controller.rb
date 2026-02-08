@@ -5,13 +5,13 @@ class TopicsController < ApplicationController
   before_action :check_honeypot!, only: :create
   before_action :check_rate_limit!, only: :create
   before_action :set_category
-  before_action :set_topic, only: [:show, :edit, :update, :destroy, :lock]
+  before_action :set_topic, only: [:show, :edit, :update, :destroy, :lock, :pin]
   before_action :authorize_author!, only: [:edit, :update]
   before_action :authorize_destroy!, only: :destroy
-  before_action :require_admin, only: :lock
+  before_action :require_staff, only: [:lock, :pin]
 
   def show
-    @posts = @topic.posts.order(:created_at).page(params[:page]).per(25)
+    @posts = @topic.posts.order(:created_at).page(params[:page]).per(10)
     @post = Post.new
   end
 
@@ -51,6 +51,12 @@ class TopicsController < ApplicationController
     redirect_to category_topic_path(@category, @topic), notice: "Topic #{status}."
   end
 
+  def pin
+    @topic.update!(pinned: !@topic.pinned?)
+    status = @topic.pinned? ? "pinned" : "unpinned"
+    redirect_to category_topic_path(@category, @topic), notice: "Topic #{status}."
+  end
+
   private
 
   def set_category
@@ -73,7 +79,7 @@ class TopicsController < ApplicationController
   end
 
   def authorize_destroy!
-    unless @topic.authored_by?(current_user) || current_user&.admin?
+    unless @topic.authored_by?(current_user) || current_user&.staff?
       flash[:alert] = "Not authorized."
       redirect_to category_topic_path(@category, @topic)
     end

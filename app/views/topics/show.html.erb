@@ -3,6 +3,7 @@
   by <strong><%= @topic.user.username %></strong>
   in <%= link_to @category.name, category_path(@category) %>
   &mdash; <%= time_ago_in_words(@topic.created_at) %> ago
+  <% if @topic.pinned? %>&mdash; <strong>[PINNED]</strong><% end %>
   <% if @topic.locked? %>&mdash; <strong>[LOCKED]</strong><% end %>
 </p>
 
@@ -12,11 +13,12 @@
   <% if @topic.authored_by?(current_user) %>
     <%= link_to "Edit", edit_category_topic_path(@category, @topic) %>
   <% end %>
-  <% if @topic.authored_by?(current_user) || current_user&.admin? %>
+  <% if @topic.authored_by?(current_user) || current_user&.staff? %>
     <%= button_to "Delete", category_topic_path(@category, @topic), method: :delete, data: { confirm: "Are you sure?" } %>
   <% end %>
-  <% if current_user&.admin? %>
+  <% if current_user&.staff? %>
     <%= button_to(@topic.locked? ? "Unlock" : "Lock", lock_category_topic_path(@category, @topic), method: :patch) %>
+    <%= button_to(@topic.pinned? ? "Unpin" : "Pin", pin_category_topic_path(@category, @topic), method: :patch) %>
   <% end %>
 </p>
 
@@ -24,7 +26,7 @@
 <h2>Replies (<%= @topic.posts_count %>)</h2>
 
 <% @posts.each do |post| %>
-  <div style="border: 1px solid #ccc; padding: 8px; margin-bottom: 8px;">
+  <div class="post-card">
     <p>
       <strong><%= post.user.username %></strong>
       &mdash; <%= time_ago_in_words(post.created_at) %> ago
@@ -34,7 +36,7 @@
       <% if post.authored_by?(current_user) %>
         <%= link_to "Edit", edit_category_topic_post_path(@category, @topic, post) %>
       <% end %>
-      <% if post.authored_by?(current_user) || current_user&.admin? %>
+      <% if post.authored_by?(current_user) || current_user&.staff? %>
         <%= button_to "Delete", category_topic_post_path(@category, @topic, post), method: :delete %>
       <% end %>
     </p>

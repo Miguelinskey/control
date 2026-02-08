@@ -20,6 +20,7 @@
         <tr>
           <td>
             <%= link_to topic.title, category_topic_path(@category, topic) %>
+            <% if topic.pinned? %>[pinned]<% end %>
             <% if topic.locked? %>[locked]<% end %>
           </td>
           <td><%= topic.user.username %></td>

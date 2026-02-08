@@ -29,7 +29,7 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:admin, :banned)
+      params.require(:user).permit(:role, :banned)
     end
   end
 end

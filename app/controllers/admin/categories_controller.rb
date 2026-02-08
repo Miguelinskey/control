@@ -3,7 +3,7 @@ module Admin
     before_action :set_category, only: [:edit, :update, :destroy]
 
     def index
-      @categories = Category.order(:name)
+      @categories = Category.order(:position)
     end
 
     def new
@@ -42,7 +42,7 @@ module Admin
     end
 
     def category_params
-      params.require(:category).permit(:name, :slug, :description)
+      params.require(:category).permit(:name, :slug, :description, :position)
     end
   end
 end

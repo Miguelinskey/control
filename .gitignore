@@ -9,3 +9,6 @@
 !/storage/.keep
 /config/master.key
 /config/credentials/*.key
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

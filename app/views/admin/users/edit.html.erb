@@ -1,9 +1,11 @@
+<%= render "admin/shared/nav" %>
+
 <h1>Edit User: <%= @user.username %></h1>
 
 <%= form_with model: [:admin, @user] do |f| %>
   <p>
-    <%= f.check_box :admin %>
-    <%= f.label :admin, "Administrator" %>
+    <%= f.label :role %><br>
+    <%= f.select :role, User::ROLES.map { |r| [r.titleize, r] } %>
   </p>
   <p>
     <%= f.check_box :banned %>

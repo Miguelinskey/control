@@ -67,7 +67,7 @@ class PostsController < ApplicationController
   end
 
   def authorize_destroy!
-    unless @post.authored_by?(current_user) || current_user&.admin?
+    unless @post.authored_by?(current_user) || current_user&.staff?
       flash[:alert] = "Not authorized."
       redirect_to category_topic_path(@category, @topic)
     end

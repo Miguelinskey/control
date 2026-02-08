@@ -8,6 +8,17 @@ class RegistrationsController < ApplicationController
     @user = User.new
   end
 
+  def check_username
+    username = params[:username].to_s.strip
+    if username.length < 2
+      render json: { available: false, message: "Username must be at least 2 characters" }
+    elsif User.exists?(username: username)
+      render json: { available: false, message: "Username is already taken" }
+    else
+      render json: { available: true, message: "Username is available" }
+    end
+  end
+
   def create
     @user = User.new(user_params)
     @user.signup_ip = request.remote_ip

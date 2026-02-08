@@ -12,6 +12,10 @@ gem "puma", ">= 5.0"
 gem "bcrypt", "~> 3.1"
 # Pagination [https://github.com/kaminari/kaminari]
 gem "kaminari"
+# JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+gem "importmap-rails"
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem "stimulus-rails"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]

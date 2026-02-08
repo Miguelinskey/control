@@ -6,12 +6,13 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application" %>
+    <%= javascript_importmap_tags %>
   </head>
   <body>
     <nav>
       <%= link_to "Forum", root_path %>
       <% if logged_in? %>
-        <span>Logged in as <strong><%= current_user.username %></strong>
+        <span><%= identicon_tag(current_user.username) %> Logged in as <strong><%= current_user.username %></strong>
         <% if current_user.admin? %>(admin) <%= link_to "Admin", admin_root_path %><% end %>
         <% if current_user.moderator? %>(mod)<% end %></span>
         <%= button_to "Logout", logout_path, method: :delete, class: "btn-link" %>

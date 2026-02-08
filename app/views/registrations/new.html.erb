@@ -7,9 +7,11 @@
     <%= label_tag :website, "Website" %><br>
     <%= text_field_tag :website %>
   </div>
-  <p>
+  <p data-controller="username-check" data-username-check-url-value="<%= users_check_username_path %>">
     <%= f.label :username %><br>
-    <%= f.text_field :username, autofocus: true %>
+    <%= f.text_field :username, autofocus: true,
+        data: { username_check_target: "input", action: "input->username-check#check" } %>
+    <span data-username-check-target="feedback" class="username-feedback"></span>
   </p>
   <p>
     <%= f.label :email %><br>

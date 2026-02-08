@@ -13,15 +13,12 @@ body { font-family: sans-serif; max-width: 960px; margin: 0 auto; padding: 10px;
 table { border-collapse: collapse; width: 100%; }
 th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; }
 th { background: #eee; }
-/*
-nav { background: #333; color: #fff; padding: 8px 12px; margin-bottom: 16px; }
-nav a { color: #fff; margin-right: 12px; }
-.flash-notice { color: green; }
-.flash-alert { color: red; }
-
-.hp-field { position: absolute; left: -9999px; }
-.btn-link { display: inline; background: none; border: none; color: #fff; cursor: pointer; text-decoration: underline; font-size: inherit; }
- */
 .form-errors { color: red; }
 .post-card { border: 1px solid #ccc; padding: 8px; margin-bottom: 8px; }
 .btn-inline { display: inline; }
+.username-feedback { font-size: 0.85em; margin-left: 4px; }
+.username-available { color: green; }
+.username-taken { color: red; }
+.identicon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; vertical-align: -0.25em; border-radius: 999px; background-color: #eee; overflow: hidden; }
+.identicon svg { width: 16px; height: 16px; }
+.hp-field { position: absolute; left: -9999px; }

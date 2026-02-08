@@ -1,6 +1,6 @@
 class Topic < ApplicationRecord
   belongs_to :user
-  belongs_to :category
+  belongs_to :category, counter_cache: true
 
   has_many :posts, dependent: :destroy
 

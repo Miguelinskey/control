@@ -1,5 +1,9 @@
 class TopicsController < ApplicationController
+  include SpamProtection
+
   before_action :require_authentication, except: :show
+  before_action :check_honeypot!, only: :create
+  before_action :check_rate_limit!, only: :create
   before_action :set_category
   before_action :set_topic, only: [:show, :edit, :update, :destroy, :lock]
   before_action :authorize_author!, only: [:edit, :update]

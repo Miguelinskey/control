@@ -1,6 +1,10 @@
 <%= render "shared/errors", object: post %>
 
 <%= form_with model: [category, topic, post] do |f| %>
+  <div class="hp-field">
+    <%= label_tag :website, "Website" %><br>
+    <%= text_field_tag :website %>
+  </div>
   <p>
     <%= f.label :body, "Reply" %><br>
     <%= f.text_area :body, rows: 5, cols: 60 %>

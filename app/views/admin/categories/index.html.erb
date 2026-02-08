@@ -1,0 +1,29 @@
+<h1>Admin: Categories</h1>
+
+<p><%= link_to "New Category", new_admin_category_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Slug</th>
+      <th>Topics</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.name %></td>
+        <td><%= category.slug %></td>
+        <td><%= category.topics_count %></td>
+        <td>
+          <%= link_to "Edit", edit_admin_category_path(category) %>
+          <%= button_to "Delete", admin_category_path(category), method: :delete, data: { confirm: "Delete category '#{category.name}'?" }, style: "display:inline;" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><%= link_to "Back to Forum", root_path %></p>

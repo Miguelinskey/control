@@ -5,9 +5,14 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
     if user&.authenticate(params[:password])
-      session[:user_id] = user.id
-      flash[:notice] = "Logged in as #{user.username}."
-      redirect_to root_path
+      if user.banned?
+        flash.now[:alert] = "Account suspended."
+        render :new, status: :unprocessable_entity
+      else
+        session[:user_id] = user.id
+        flash[:notice] = "Logged in as #{user.username}."
+        redirect_to root_path
+      end
     else
       flash.now[:alert] = "Invalid email or password."
       render :new, status: :unprocessable_entity

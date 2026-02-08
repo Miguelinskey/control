@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   post "login",   to: "sessions#create"
   delete "logout", to: "sessions#destroy"
 
+  namespace :admin do
+    resources :categories, except: [:show]
+    resources :users, only: [:index, :edit, :update, :destroy]
+  end
+
   resources :categories, only: [:index, :show], path: "c", param: :slug do
     resources :topics, except: [:index] do
       member { patch :lock }

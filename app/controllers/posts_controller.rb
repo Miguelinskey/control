@@ -1,5 +1,9 @@
 class PostsController < ApplicationController
+  include SpamProtection
+
   before_action :require_authentication
+  before_action :check_honeypot!, only: :create
+  before_action :check_rate_limit!, only: :create
   before_action :set_category_and_topic
   before_action :set_post, only: [:edit, :update, :destroy]
   before_action :authorize_author!, only: [:edit, :update]

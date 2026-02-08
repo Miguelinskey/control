@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_07_225453) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_08_091441) do
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
     t.string "name", null: false
     t.string "slug", null: false
+    t.integer "topics_count", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
@@ -35,6 +36,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_07_225453) do
     t.integer "category_id", null: false
     t.datetime "created_at", null: false
     t.boolean "locked", default: false, null: false
+    t.integer "posts_count", default: 0, null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
@@ -44,9 +46,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_07_225453) do
 
   create_table "users", force: :cascade do |t|
     t.boolean "admin", default: false, null: false
+    t.boolean "banned", default: false, null: false
     t.datetime "created_at", null: false
     t.string "email", null: false
     t.string "password_digest", null: false
+    t.string "signup_ip"
     t.datetime "updated_at", null: false
     t.string "username", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

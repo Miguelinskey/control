@@ -23,7 +23,7 @@
             <% if topic.locked? %>[locked]<% end %>
           </td>
           <td><%= topic.user.username %></td>
-          <td><%= topic.posts.count %></td>
+          <td><%= topic.posts_count %></td>
           <td><%= time_ago_in_words(topic.created_at) %> ago</td>
         </tr>
       <% end %>

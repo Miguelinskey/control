@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
   belongs_to :user
-  belongs_to :topic
+  belongs_to :topic, counter_cache: true
 
   validates :body, presence: true
 

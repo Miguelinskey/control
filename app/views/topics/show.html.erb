@@ -1,0 +1,56 @@
+<h1><%= @topic.title %></h1>
+<p>
+  by <strong><%= @topic.user.username %></strong>
+  in <%= link_to @category.name, category_path(@category) %>
+  &mdash; <%= time_ago_in_words(@topic.created_at) %> ago
+  <% if @topic.locked? %>&mdash; <strong>[LOCKED]</strong><% end %>
+</p>
+
+<div><%= simple_format(@topic.body) %></div>
+
+<p>
+  <% if @topic.authored_by?(current_user) %>
+    <%= link_to "Edit", edit_category_topic_path(@category, @topic) %>
+  <% end %>
+  <% if @topic.authored_by?(current_user) || current_user&.admin? %>
+    <%= button_to "Delete", category_topic_path(@category, @topic), method: :delete, data: { confirm: "Are you sure?" } %>
+  <% end %>
+  <% if current_user&.admin? %>
+    <%= button_to(@topic.locked? ? "Unlock" : "Lock", lock_category_topic_path(@category, @topic), method: :patch) %>
+  <% end %>
+</p>
+
+<hr>
+<h2>Replies (<%= @topic.posts.count %>)</h2>
+
+<% @posts.each do |post| %>
+  <div style="border: 1px solid #ccc; padding: 8px; margin-bottom: 8px;">
+    <p>
+      <strong><%= post.user.username %></strong>
+      &mdash; <%= time_ago_in_words(post.created_at) %> ago
+    </p>
+    <div><%= simple_format(post.body) %></div>
+    <p>
+      <% if post.authored_by?(current_user) %>
+        <%= link_to "Edit", edit_category_topic_post_path(@category, @topic, post) %>
+      <% end %>
+      <% if post.authored_by?(current_user) || current_user&.admin? %>
+        <%= button_to "Delete", category_topic_post_path(@category, @topic, post), method: :delete %>
+      <% end %>
+    </p>
+  </div>
+<% end %>
+
+<%= paginate @posts %>
+
+<% unless @topic.locked? %>
+  <% if logged_in? %>
+    <hr>
+    <h3>Reply</h3>
+    <%= render "posts/form", post: @post, category: @category, topic: @topic %>
+  <% end %>
+<% else %>
+  <p><em>This topic is locked. No new replies.</em></p>
+<% end %>
+
+<p><%= link_to "Back to #{@category.name}", category_path(@category) %></p>

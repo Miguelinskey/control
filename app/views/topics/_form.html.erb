@@ -1,0 +1,13 @@
+<%= render "shared/errors", object: topic %>
+
+<%= form_with model: [category, topic] do |f| %>
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title, size: 60, autofocus: true %>
+  </p>
+  <p>
+    <%= f.label :body %><br>
+    <%= f.text_area :body, rows: 10, cols: 60 %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

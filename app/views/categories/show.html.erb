@@ -1,0 +1,38 @@
+<h1><%= @category.name %></h1>
+<p><%= @category.description %></p>
+
+<% if logged_in? %>
+  <p><%= link_to "New Topic", new_category_topic_path(@category) %></p>
+<% end %>
+
+<% if @topics.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Topic</th>
+        <th>Author</th>
+        <th>Replies</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @topics.each do |topic| %>
+        <tr>
+          <td>
+            <%= link_to topic.title, category_topic_path(@category, topic) %>
+            <% if topic.locked? %>[locked]<% end %>
+          </td>
+          <td><%= topic.user.username %></td>
+          <td><%= topic.posts.count %></td>
+          <td><%= time_ago_in_words(topic.created_at) %> ago</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @topics %>
+<% else %>
+  <p>No topics yet.</p>
+<% end %>
+
+<p><%= link_to "Back to Forum", root_path %></p>

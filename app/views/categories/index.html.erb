@@ -1,0 +1,20 @@
+<h1>Forum</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Topics</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= link_to category.name, category_path(category) %></td>
+        <td><%= category.description %></td>
+        <td><%= category.topics.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

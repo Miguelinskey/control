@@ -1,0 +1,5 @@
+<h1>Edit Reply</h1>
+
+<%= render "form", post: @post, category: @category, topic: @topic %>
+
+<p><%= link_to "Back", category_topic_path(@category, @topic) %></p>

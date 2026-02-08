@@ -5,6 +5,6 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.find_by!(slug: params[:slug])
-    @topics = @category.topics.order(pinned: :desc, created_at: :desc).page(params[:page]).per(25)
+    @topics = @category.topics.order(pinned: :desc, created_at: :desc).page(params[:page]).per(Topic::PER_PAGE)
   end
 end

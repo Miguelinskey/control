@@ -1,4 +1,6 @@
 class Topic < ApplicationRecord
+  PER_PAGE = 25
+
   belongs_to :user
   belongs_to :category, counter_cache: true
 

@@ -11,8 +11,13 @@
       <%= identicon_tag(@topic.user.username) %> <strong><%= @topic.user.username %></strong>
       &mdash; <%= time_ago_in_words(@topic.created_at) %> ago
     </p>
-    <div><%= simple_format(@topic.body) %></div>
+    <div><%= format_post_body(@topic.body) %></div>
     <p>
+      <% if logged_in? && !@topic.locked? %>
+        <span data-controller="quote" data-quote-username-value="<%= @topic.user.username %>" data-quote-body-value="<%= @topic.body %>">
+          <a href="#" data-action="click->quote#insert">Quote</a>
+        </span>
+      <% end %>
       <% if @topic.authored_by?(current_user) %>
         <%= link_to "Edit", edit_category_topic_path(@category, @topic) %>
       <% end %>
@@ -28,13 +33,18 @@
 <% end %>
 
 <% @posts.each do |post| %>
-  <div class="post-card">
+  <div class="post-card" id="post-<%= post.id %>">
     <p>
       <%= identicon_tag(post.user.username) %> <strong><%= post.user.username %></strong>
       &mdash; <%= time_ago_in_words(post.created_at) %> ago
     </p>
-    <div><%= simple_format(post.body) %></div>
+    <div><%= format_post_body(post.body) %></div>
     <p>
+      <% if logged_in? && !@topic.locked? %>
+        <span data-controller="quote" data-quote-username-value="<%= post.user.username %>" data-quote-body-value="<%= post.body %>">
+          <a href="#" data-action="click->quote#insert">Quote</a>
+        </span>
+      <% end %>
       <% if post.authored_by?(current_user) %>
         <%= link_to "Edit", edit_category_topic_post_path(@category, @topic, post) %>
       <% end %>
@@ -49,7 +59,6 @@
 
 <% unless @topic.locked? %>
   <% if logged_in? %>
-    <hr>
     <h3>Reply</h3>
     <%= render "posts/form", post: @post, category: @category, topic: @topic %>
   <% end %>

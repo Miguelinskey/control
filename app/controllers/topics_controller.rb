@@ -11,7 +11,7 @@ class TopicsController < ApplicationController
   before_action :require_staff, only: [:lock, :pin]
 
   def show
-    @posts = @topic.posts.order(:created_at).page(params[:page]).per(10)
+    @posts = @topic.posts.order(:created_at).page(params[:page]).per(Post::PER_PAGE)
     @post = Post.new
   end
 

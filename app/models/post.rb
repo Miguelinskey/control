@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  PER_PAGE = 10
+
   belongs_to :user
   belongs_to :topic, counter_cache: true
 

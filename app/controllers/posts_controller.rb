@@ -14,9 +14,10 @@ class PostsController < ApplicationController
     @post = @topic.posts.new(post_params)
     @post.user = current_user
     if @post.save
-      redirect_to category_topic_path(@category, @topic), notice: "Reply posted."
+      last_page = (@topic.posts.count.to_f / Post::PER_PAGE).ceil
+      redirect_to category_topic_path(@category, @topic, page: last_page, anchor: "post-#{@post.id}"), notice: "Reply posted."
     else
-      @posts = @topic.posts.order(:created_at).page(params[:page]).per(25)
+      @posts = @topic.posts.order(:created_at).page(params[:page]).per(Post::PER_PAGE)
       render "topics/show", status: :unprocessable_entity
     end
   end
